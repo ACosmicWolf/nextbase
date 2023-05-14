@@ -1,3 +1,5 @@
+import AuthProvider from "./AuthProvider";
+
 export const metadata = {
   title: "NextBase",
   description: "A Social media website built with Next.js and Firebase",
@@ -11,7 +13,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 }
