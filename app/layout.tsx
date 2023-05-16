@@ -1,9 +1,10 @@
+import { Metadata } from "next";
 import AuthProvider from "./AuthProvider";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "NextBase",
   description: "A Social media website built with Next.js and Firebase",
-  keywords: "Next.js, Firebase, Social Media, NextBase",
+  keywords: "nextjs, firebase, social media, typescript, react, nextbase",
 };
 
 export default function RootLayout({
