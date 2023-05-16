@@ -1,0 +1,16 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: black;
+
+  background-image: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.2) 0.5px,
+    #000 1px
+  );
+  background-size: 5vmin 5vmin;
+}
