@@ -57,6 +57,16 @@ export default function ProfileButton({ name, email, image }: Props) {
 
           <div className={styles.seperator}></div>
 
+          <Link href={"/profile/edit"} className={styles.dropdownItem}>
+            <p>Edit Profile</p>
+          </Link>
+
+          <Link href={"/posts/add"} className={styles.dropdownItem}>
+            <p>Add Post</p>
+          </Link>
+
+          <div className={styles.seperator}></div>
+
           <Link href={"/settings"} className={styles.dropdownItem}>
             <p>Settings</p>
           </Link>

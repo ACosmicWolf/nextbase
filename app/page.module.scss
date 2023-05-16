@@ -1,0 +1,24 @@
+.title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 1rem;
+
+  margin-top: 5rem;
+
+  & a {
+    color: #003092;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.description {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin: 1rem;
+}
