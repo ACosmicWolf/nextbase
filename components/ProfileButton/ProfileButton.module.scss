@@ -1,0 +1,90 @@
+.profileButton {
+  display: flex;
+  gap: 1vmin;
+  justify-content: center;
+  align-items: center;
+  background: inherit;
+  border-radius: 5px;
+  padding: 10px;
+  transition: all 0.4s ease;
+
+  // prevents the button from shrinking or expanding when hovered
+  border: 1px solid black;
+
+  &:hover {
+    border: 1px solid #242424;
+    filter: brightness(0.8);
+  }
+
+  & p {
+    color: white;
+    font-size: 1.5vmin;
+    font-weight: bold;
+  }
+}
+
+.profileImage {
+  width: 4vmin;
+  height: 4vmin;
+  border-radius: 50%;
+}
+
+.dropdown {
+  position: absolute;
+  top: 60px;
+  width: 300px;
+  background: #121212;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.dropdownItem a {
+  all: unset;
+  color: white;
+  font-size: 1.5vmin;
+  font-weight: bold;
+}
+
+.dropdownItem {
+  padding: 10px;
+  transition: all 0.4s ease;
+  border-radius: 5px;
+  width: 90%;
+
+  &:hover {
+    background: #242424;
+  }
+}
+
+.logoutButton {
+  background: #ff2626;
+  color: white;
+  width: 90%;
+  border-radius: 5px;
+  padding: 10px;
+  transition: all 0.4s ease;
+  display: flex;
+  justify-content: center;
+
+  &:hover {
+    background: #ff0000;
+  }
+
+  & button {
+    font-size: 1.5vmin;
+    font-weight: bold;
+    text-align: center;
+    background: inherit;
+    border: none;
+    color: inherit;
+  }
+}
+
+.seperator {
+  width: 80%;
+  height: 1px;
+  background: white;
+  margin: 10px 0;
+}

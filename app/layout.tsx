@@ -1,5 +1,16 @@
+import "./globals.scss";
+
+import NavMenu from "./NavMenu";
 import { Metadata } from "next";
 import AuthProvider from "./AuthProvider";
+
+import { Roboto } from "next/font/google";
+
+const roboto = Roboto({
+  weight: ["100", "300", "400", "500", "700", "900"],
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "NextBase",
@@ -13,9 +24,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={roboto.className}>
       <body>
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <NavMenu />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
