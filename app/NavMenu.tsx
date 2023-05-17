@@ -3,9 +3,10 @@
 import Link from "next/link";
 import styles from "./NavMenu.module.scss";
 import { signIn, useSession } from "next-auth/react";
-import { useEffect } from "react";
 import Image from "next/image";
 import ProfileButton from "@/components/ProfileButton";
+
+import logoImage from "public/logo.png";
 
 export default function NavMenu() {
   const { data: session, status } = useSession();
@@ -13,7 +14,9 @@ export default function NavMenu() {
   return (
     <nav className={styles.navbar}>
       <h1 className={styles.logo}>
-        <Link href="/">NextBase</Link>
+        <Link href="/">
+          <Image src={logoImage} alt="NextBase" width={200} />
+        </Link>
       </h1>
       <div>
         <ul className={styles.navlinks}>
