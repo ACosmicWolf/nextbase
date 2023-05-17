@@ -61,7 +61,7 @@ export default function ProfileButton({ name, email, image }: Props) {
             <p>Edit Profile</p>
           </Link>
 
-          <Link href={"/posts/add"} className={styles.dropdownItem}>
+          <Link href={"/posts/create"} className={styles.dropdownItem}>
             <p>Add Post</p>
           </Link>
 
