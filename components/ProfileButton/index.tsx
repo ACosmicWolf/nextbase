@@ -20,7 +20,7 @@ export default function ProfileButton({ name, email, image }: Props) {
   const router = useRouter();
 
   return (
-    <button
+    <div
       onClick={() => {
         setOpen(!open);
       }}
@@ -83,6 +83,6 @@ export default function ProfileButton({ name, email, image }: Props) {
           </div>
         </div>
       )}
-    </button>
+    </div>
   );
 }

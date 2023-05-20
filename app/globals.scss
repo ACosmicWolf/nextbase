@@ -5,13 +5,13 @@
 body {
   margin: 0;
   padding: 0;
-  background: black;
+  background: #111111;
   color: white;
 
   background-image: radial-gradient(
     circle at center,
     rgba(255, 255, 255, 0.2) 0.5px,
-    #000 1px
+    #111111 1px
   );
   background-size: 38px 38px;
 }
