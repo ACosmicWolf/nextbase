@@ -1,10 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { initFirestore } from "@next-auth/firebase-adapter";
 import { getFirestore } from "firebase/firestore";
-
-import { cert } from "firebase-admin/app";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -24,11 +21,5 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
-export const firestore = initFirestore({
-  credential: cert({
-    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-    clientEmail: process.env.NEXT_PUBLIC_FIREBASE_CLIENT_EMAIL,
-    privateKey: process.env.NEXT_PUBLIC_FIREBASE_PRIVATE_KEY,
-  }),
-});
+
 export const db = getFirestore(app);

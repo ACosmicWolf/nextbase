@@ -2,6 +2,8 @@ import { db } from "@/lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
 
 import styles from "./PostsPage.module.scss";
+import Link from "next/link";
+import Image from "next/image";
 
 async function GetPosts() {
   const posts = await getDocs(collection(db, "posts"));
@@ -24,13 +26,28 @@ export default async function PostsPage() {
               {String(post.data().content).slice(0, 30)}
             </p>
 
-            <a href={`/posts/${post.id}`} className={styles.postLink}>
+            <Link href={`/posts/${post.id}`} className={styles.postLink}>
               Read more
-            </a>
+            </Link>
 
             <p>
               <small className={styles.creationDate}>
                 Created at: {post.data().createdAt.toDate().toLocaleString()}
+              </small>
+            </p>
+
+            <p>
+              <small className={styles.author}>
+                Author:{" "}
+                <Link href={`/users/${post.data().userId}`}>
+                  <Image
+                    src={post.data().userImage}
+                    alt="Author Profile Image"
+                    width={15}
+                    height={15}
+                  />{" "}
+                  {post.data().userName}
+                </Link>
               </small>
             </p>
           </li>

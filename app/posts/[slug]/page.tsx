@@ -17,9 +17,8 @@ interface Props {
 
 async function GetPost(slug: string) {
   const post = await getDoc(doc(db, "posts", slug));
-  const user = await getDoc(doc(db, "users", post.data()?.userId));
 
-  return { post, user };
+  return post;
 }
 
 export default async function Post({ params }: Props) {
@@ -27,20 +26,20 @@ export default async function Post({ params }: Props) {
 
   return (
     <div>
-      <h1>{data.post.data()?.title}</h1>
+      <h1>{data.data()?.title}</h1>
       <p>
         <Image
-          src={data.user.data()?.image}
+          src={data.data()?.userImage}
           alt="Author Pfp"
           width={50}
           height={50}
         />
-        <small>Created by: {data.user.data()?.name}</small>
+        <small>Created by: {data.data()?.userName}</small>
       </p>
-      <p>{data.post.data()?.content}</p>
+      <p>{data.data()?.content}</p>
       <p>
         <small>
-          Created at: {data.post.data()?.createdAt.toDate().toLocaleString()}
+          Created at: {data.data()?.createdAt.toDate().toLocaleString()}
         </small>
       </p>
     </div>
