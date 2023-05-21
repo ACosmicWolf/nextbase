@@ -19,6 +19,17 @@ const nextConfig = {
       },
     ],
   },
+  headers: () => [
+    {
+      source: "/:posts*",
+      headers: [
+        {
+          key: "Cache-Control",
+          value: "no-store",
+        },
+      ],
+    },
+  ],
 };
 
 module.exports = nextConfig;
