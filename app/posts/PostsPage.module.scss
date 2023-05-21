@@ -6,6 +6,21 @@
   list-style: none;
 
   .post {
+    .imageContainer {
+      width: 200px;
+
+      > div {
+        position: unset !important;
+      }
+
+      .image {
+        object-fit: contain;
+        width: 100% !important;
+        position: relative !important;
+        height: unset !important;
+      }
+    }
+
     .postTitle {
       font-size: 1.5rem;
       font-weight: bold;

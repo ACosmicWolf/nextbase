@@ -22,6 +22,16 @@ export default async function PostsPage() {
         {posts.docs.map((post) => (
           <li key={post.id} className={styles.post}>
             <h2 className={styles.postTitle}>{post.data().title}</h2>
+
+            <div className={styles.imageContainer}>
+              <Image
+                src={post.data().image}
+                alt="Post Image"
+                fill
+                className={styles.image}
+              />
+            </div>
+
             <p className={styles.postContent}>
               {String(post.data().content).slice(0, 30)}
             </p>

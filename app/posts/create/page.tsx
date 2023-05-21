@@ -1,14 +1,24 @@
 "use client";
 
-import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import styles from "./CreatePostForm.module.scss";
 import { useSession } from "next-auth/react";
-import { db } from "@/lib/firebase";
+import { db, storage } from "@/lib/firebase";
 import { useState } from "react";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import { ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
 
 export default function CreatePost() {
   const { data: session } = useSession();
+
+  const router = useRouter();
 
   const [loading, setLoading] = useState(false);
 
@@ -20,8 +30,15 @@ export default function CreatePost() {
 
     const title = data.get("title");
     const content = data.get("content");
+    const image: File = data.get("image") as File;
 
-    console.log({ title, content });
+    console.log({ title, content, image });
+
+    const document = doc(collection(db, "posts"));
+
+    const storageRef = ref(storage, `/postimages/${document.id}`);
+
+    const uploadTask = await uploadBytesResumable(storageRef, image);
 
     const user = await getDocs(
       query(collection(db, "users"), where("email", "==", session?.user?.email))
@@ -36,13 +53,14 @@ export default function CreatePost() {
       userEmail: session?.user?.email,
       userName: session?.user?.name,
       userImage: session?.user?.image,
+      image: uploadTask.ref.name,
       createdAt: new Date(),
       updatedAt: new Date(),
       likes: 0,
     });
 
     setLoading(false);
-    redirect("/posts/" + req.id);
+    router.push("/posts/" + req.id);
   }
 
   if (!session)
@@ -70,6 +88,17 @@ export default function CreatePost() {
         <div>
           <label htmlFor="content">Content</label>
           <textarea id="content" name="content" required disabled={loading} />
+        </div>
+
+        <div>
+          <label htmlFor="image">Image</label>
+          <input
+            type="file"
+            id="image"
+            accept="image/*"
+            name="image"
+            disabled={loading}
+          />
         </div>
 
         <button type="submit" disabled={loading}>
