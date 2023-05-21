@@ -3,13 +3,15 @@
   gap: 1vmin;
   justify-content: center;
   align-items: center;
-  background: inherit;
   border-radius: 5px;
-  padding: 10px;
   transition: all 0.4s ease;
 
   // prevents the button from shrinking or expanding when hovered
   border: 1px solid transparent;
+
+  padding: 4px;
+  background: #2b2e2e;
+  border-radius: 50%;
 
   &:hover {
     border: 1px solid #242424;
@@ -18,14 +20,14 @@
 
   & p {
     color: white;
-    font-size: 1.5vmin;
+    font-size: 0.8rem;
     font-weight: bold;
   }
 }
 
 .profileImage {
-  width: 4vmin;
-  height: 4vmin;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
 }
 

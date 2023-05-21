@@ -1,18 +1,11 @@
 .postList {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: space-between;
   padding: 2rem;
   list-style: none;
 
   .post {
-    width: 30%;
-    margin-bottom: 2rem;
-    padding: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
-
     .postTitle {
       font-size: 1.5rem;
       font-weight: bold;

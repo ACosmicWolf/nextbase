@@ -1,15 +1,14 @@
 import "./globals.scss";
 
-import NavMenu from "./NavMenu";
+import NavMenu, { BottomNavMenu } from "./NavMenu";
 import { Metadata } from "next";
 import AuthProvider from "./AuthProvider";
 
-import { Roboto } from "next/font/google";
+import { Rubik } from "next/font/google";
 
-const roboto = Roboto({
-  weight: ["100", "300", "400", "500", "700", "900"],
-  subsets: ["latin"],
-  display: "swap",
+const rubik = Rubik({
+  subsets: ["latin-ext"],
+  weight: ["300", "400", "500", "700"],
 });
 
 export const metadata: Metadata = {
@@ -24,11 +23,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={roboto.className}>
+    <html lang="en" className={rubik.className}>
       <body>
         <AuthProvider>
           <NavMenu />
-          {children}
+          <div className="children">{children}</div>
+          <BottomNavMenu />
         </AuthProvider>
       </body>
     </html>

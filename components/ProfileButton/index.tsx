@@ -39,7 +39,6 @@ export default function ProfileButton({ name, email, image }: Props) {
         alt={name}
         className={styles.profileImage}
       />
-      <p>{name}</p>
 
       {open && (
         <div className={styles.dropdown}>

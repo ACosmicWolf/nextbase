@@ -5,13 +5,11 @@
 body {
   margin: 0;
   padding: 0;
-  background: #111111;
-  color: white;
+  background: #121416;
+  color: #e5e5e6;
+  font-family: "rubik", sans-serif;
 
-  background-image: radial-gradient(
-    circle at center,
-    rgba(255, 255, 255, 0.2) 0.5px,
-    #111111 1px
-  );
-  background-size: 38px 38px;
+  .children {
+    padding: 0 20px 0 20px;
+  }
 }
