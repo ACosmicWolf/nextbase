@@ -13,7 +13,12 @@ import { useSession } from "next-auth/react";
 import { db, storage } from "@/lib/firebase";
 import { useState } from "react";
 import { redirect, useRouter } from "next/navigation";
-import { ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
+import {
+  getDownloadURL,
+  ref,
+  uploadBytes,
+  uploadBytesResumable,
+} from "firebase/storage";
 
 export default function CreatePost() {
   const { data: session } = useSession();
@@ -46,6 +51,8 @@ export default function CreatePost() {
       return querySnapshot.docs[0];
     });
 
+    console.log(await getDownloadURL(uploadTask.ref));
+
     const req = await addDoc(collection(db, "posts"), {
       title: title,
       content: content,
@@ -53,14 +60,14 @@ export default function CreatePost() {
       userEmail: session?.user?.email,
       userName: session?.user?.name,
       userImage: session?.user?.image,
-      image: uploadTask.ref.name,
+      image: await getDownloadURL(uploadTask.ref),
       createdAt: new Date(),
       updatedAt: new Date(),
       likes: 0,
     });
 
-    setLoading(false);
     router.push("/posts/" + req.id);
+    setLoading(false);
   }
 
   if (!session)
