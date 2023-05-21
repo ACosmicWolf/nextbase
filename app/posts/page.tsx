@@ -8,6 +8,8 @@ import Image from "next/image";
 async function GetPosts() {
   const posts = await getDocs(collection(db, "posts"));
 
+  console.log("posts", posts.size);
+
   return posts;
 }
 
