@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";
+export const revalidate = 10;
+
 import { db } from "@/lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import Image from "next/image";
