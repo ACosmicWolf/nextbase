@@ -1,24 +1,12 @@
 "use client";
 
-import {
-  addDoc,
-  collection,
-  doc,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
+import { addDoc, collection, doc } from "firebase/firestore";
 import styles from "./CreatePostForm.module.scss";
 import { useSession } from "next-auth/react";
 import { db, storage } from "@/lib/firebase";
 import { useState } from "react";
-import { redirect, useRouter } from "next/navigation";
-import {
-  getDownloadURL,
-  ref,
-  uploadBytes,
-  uploadBytesResumable,
-} from "firebase/storage";
+import { useRouter } from "next/navigation";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 export default function CreatePost() {
   const { data: session } = useSession();
@@ -37,26 +25,16 @@ export default function CreatePost() {
     const content = data.get("content");
     const image: File = data.get("image") as File;
 
-    console.log({ title, content, image });
-
     const document = doc(collection(db, "posts"));
 
     const storageRef = ref(storage, `/postimages/${document.id}`);
 
     const uploadTask = await uploadBytesResumable(storageRef, image);
 
-    const user = await getDocs(
-      query(collection(db, "users"), where("email", "==", session?.user?.email))
-    ).then((querySnapshot) => {
-      return querySnapshot.docs[0];
-    });
-
-    console.log(await getDownloadURL(uploadTask.ref));
-
     const req = await addDoc(collection(db, "posts"), {
       title: title,
       content: content,
-      userId: user.id,
+      userId: session?.user.id,
       userEmail: session?.user?.email,
       userName: session?.user?.name,
       userImage: session?.user?.image,

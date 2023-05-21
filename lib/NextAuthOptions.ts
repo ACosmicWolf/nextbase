@@ -25,4 +25,12 @@ export const authoptions: NextAuthOptions = {
   ],
   adapter: FirestoreAdapter(firestore),
   secret: process.env.NEXT_PUBLIC_SECRET,
+  callbacks: {
+    async session({ session, token, user }) {
+      // Send properties to the client, like an access_token and user id from a provider.
+      session.user.id = user.id;
+
+      return session;
+    },
+  },
 };
