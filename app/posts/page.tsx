@@ -27,12 +27,14 @@ export default async function PostsPage() {
         {posts.docs.map((post) => (
           <li key={post.id} className={styles.post}>
             <div className={styles.imageContainer}>
-              <Image
-                src={post.data().image}
-                alt="Post Image"
-                fill
-                className={styles.image}
-              />
+              {post.data().image && (
+                <Image
+                  src={post.data().image}
+                  alt={post.data().title}
+                  fill
+                  className={styles.image}
+                />
+              )}
             </div>
 
             <div className={styles.content}>
