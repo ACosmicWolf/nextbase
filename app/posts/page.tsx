@@ -25,7 +25,7 @@ export default async function PostsPage() {
 
       <ul className={styles.postList}>
         {posts.docs.map((post) => (
-          <li key={post.id} className={styles.post}>
+          <Link href={"/posts" + post.id} key={post.id} className={styles.post}>
             <div className={styles.imageContainer}>
               {post.data().image && (
                 <Image
@@ -85,7 +85,7 @@ export default async function PostsPage() {
                 </small>
               </p>
             </div>
-          </li>
+          </Link>
         ))}
       </ul>
     </div>
