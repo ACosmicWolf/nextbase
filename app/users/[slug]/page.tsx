@@ -34,6 +34,7 @@ async function GetPosts(slug: any) {
 }
 
 export default async function ProfilePage({ params }: Props) {
+  const session = await getServerSession(authoptions);
   const posts = await GetPosts(params.slug);
   const user = await getDoc(doc(db, "users", params.slug));
 
@@ -68,10 +69,12 @@ export default async function ProfilePage({ params }: Props) {
               <h1>{user.data()?.name}</h1>
               <span className={styles.infoEmail}>{user.data()?.email}</span>
             </div>
-            <form action={followUnfollow}>
-              {/* @ts-expect-error Server Component */}
-              <FollowButton slug={params.slug} />
-            </form>
+            {params.slug !== session?.user?.id && (
+              <form action={followUnfollow}>
+                {/* @ts-expect-error Server Component */}
+                <FollowButton slug={params.slug} />
+              </form>
+            )}
           </div>
         </div>
       </div>
