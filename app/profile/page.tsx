@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import styles from "./Profile.module.scss";
 import { authoptions } from "@/lib/NextAuthOptions";
 import Image from "next/image";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import Link from "next/link";
 
@@ -34,15 +34,15 @@ export default async function ProfilePage() {
             />
             <div>
               <p>
-                {session?.user?.followers?.length}
+                {session?.user?.followers?.length || 0}
                 <span>Followers</span>
               </p>
               <p>
-                {session?.user?.following?.length}
+                {session?.user?.following?.length || 0}
                 <span>Following</span>
               </p>
               <p>
-                {posts.length}
+                {posts.length || 0}
                 <span>Posts</span>
               </p>
             </div>

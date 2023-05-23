@@ -1,17 +1,23 @@
-import { db } from "@/lib/firebase";
+import { getServerSession } from "next-auth";
+import styles from "./UserPage.module.scss";
+import { authoptions } from "@/lib/NextAuthOptions";
+import Image from "next/image";
 import {
   arrayRemove,
   arrayUnion,
+  collection,
   doc,
   getDoc,
+  getDocs,
+  query,
   updateDoc,
+  where,
 } from "firebase/firestore";
-import Image from "next/image";
-
-import styles from "./UserPage.module.scss";
-import { getServerSession } from "next-auth";
-import { authoptions } from "@/lib/NextAuthOptions";
+import { db } from "@/lib/firebase";
+import Link from "next/link";
 import { revalidatePath } from "next/cache";
+import FollowButton from "./FollowButton";
+import { followUnfollow } from "./actions";
 
 interface Props {
   params: {
@@ -19,64 +25,98 @@ interface Props {
   };
 }
 
-export default async function UserPage({ params }: Props) {
+async function GetPosts(slug: any) {
+  const user = await getDoc(doc(db, "users", slug));
+  const req = await getDocs(
+    query(collection(db, "posts"), where("userEmail", "==", user.data()?.email))
+  );
+  return req.docs;
+}
+
+export default async function ProfilePage({ params }: Props) {
+  const posts = await GetPosts(params.slug);
   const user = await getDoc(doc(db, "users", params.slug));
-  const session = await getServerSession(authoptions);
-
-  async function followUnfollow(formData: FormData) {
-    "use server";
-    const userId: string = formData.get("userId") as string;
-    const session = await getServerSession(authoptions);
-
-    if (session?.user.followers?.includes(userId)) {
-      await updateDoc(doc(db, "users", session?.user.id), {
-        following: arrayRemove(userId),
-      }).then(() => console.log("removed"));
-
-      await updateDoc(doc(db, "users", userId), {
-        followers: arrayRemove(session?.user.id),
-      }).then(() => console.log("removed"));
-    } else {
-      await updateDoc(doc(db, "users", session?.user.id!), {
-        following: arrayUnion(userId),
-      });
-
-      await updateDoc(doc(db, "users", userId), {
-        followers: arrayUnion(session?.user.id),
-      });
-    }
-
-    revalidatePath("/users/" + userId);
-  }
 
   return (
-    <div className={styles.UserPage}>
-      <Image
-        src={user.data()?.image}
-        alt={user.data()?.name}
-        width={100}
-        height={100}
-      />
-      <h1>{user.data()?.name}</h1>
-      <p>{user.data()?.email}</p>
+    <div className={styles.container}>
+      <div className={styles.profileSection}>
+        <div className={styles.topSection}>
+          <div>
+            <Image
+              src={user.data()?.image as string}
+              alt={user.data()?.name as string}
+              width={100}
+              height={100}
+            />
+            <div>
+              <p>
+                {user.data()?.followers?.length || 0}
+                <span>Followers</span>
+              </p>
+              <p>
+                {user.data()?.following?.length || 0}
+                <span>Following</span>
+              </p>
+              <p>
+                {posts.length || 0}
+                <span>Posts</span>
+              </p>
+            </div>
+          </div>
+          <div className={styles.infoSection}>
+            <div>
+              <h1>{user.data()?.name}</h1>
+              <span className={styles.infoEmail}>{user.data()?.email}</span>
+            </div>
+            <form action={followUnfollow}>
+              {/* @ts-expect-error Server Component */}
+              <FollowButton slug={params.slug} />
+            </form>
+          </div>
+        </div>
+      </div>
+      <div className={styles.postsSection}>
+        <h1>Posts</h1>
+        <div className={styles.posts}>
+          {posts.map((post) => (
+            <Link
+              href={`/posts/${post.id}`}
+              className={styles.post}
+              key={post.id}
+            >
+              <div className={styles.postImage}>
+                {post.data().image && (
+                  <Image
+                    src={post.data().image}
+                    alt={post.data().title}
+                    fill
+                    className={styles.image}
+                  />
+                )}
+              </div>
+              <div className={styles.postContent}>
+                <h1>{post.data().title}</h1>
+                <p>{post.data().content}</p>
 
-      <p>
-        Following: {user.data()?.following ? user.data()?.following.length : 0}
-      </p>
-      <p>
-        Followers: {user.data()?.followers ? user.data()?.followers.length : 0}
-      </p>
-
-      {session?.user?.id !== user.id && (
-        <form action={followUnfollow}>
-          <input type="hidden" name="userId" value={user.id} />
-          <button className={styles.editButton} type="submit">
-            {user.data()?.followers?.includes(session?.user?.id)
-              ? "Unfollow"
-              : "Follow"}
-          </button>
-        </form>
-      )}
+                <small>
+                  {`
+                  ${post
+                    .data()
+                    .createdAt.toDate()
+                    .toLocaleString("en-US", { timeStyle: "short" })}
+                    -
+                    ${post.data().createdAt.toDate().toLocaleString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}  
+                  `}
+                </small>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
