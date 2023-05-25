@@ -17,6 +17,7 @@ export default function AboutPage() {
         <li>View posts from other users</li>
         <li>Add and edit your own posts</li>
         <li>Explore other users&apos; profiles</li>
+        <li>Image compression when uploaded!</li>
       </ul>
 
       <h2 className={styles.tech_heading}>Tech Stack</h2>
