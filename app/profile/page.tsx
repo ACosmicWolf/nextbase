@@ -12,6 +12,7 @@ import {
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 async function GetPosts() {
   const session = await getServerSession(authoptions);
@@ -27,6 +28,10 @@ async function GetPosts() {
 
 export default async function ProfilePage() {
   const session = await getServerSession(authoptions);
+
+  if (!session)
+    redirect("/api/auth/signin?callbackUrl=http://localhost:3000/profile");
+
   const posts = await GetPosts();
 
   return (
