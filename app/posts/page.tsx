@@ -68,7 +68,7 @@ export default async function PostsPage() {
                 )}
               </p>
 
-              <p>
+              <div>
                 <small className={styles.creationDate}>
                   {`
                   ${post
@@ -83,7 +83,7 @@ export default async function PostsPage() {
                     })}  
                   `}
                 </small>
-              </p>
+              </div>
             </div>
           </Link>
         ))}

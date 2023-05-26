@@ -2,7 +2,14 @@ import { getServerSession } from "next-auth";
 import styles from "./Profile.module.scss";
 import { authoptions } from "@/lib/NextAuthOptions";
 import Image from "next/image";
-import { collection, getDoc, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  getDoc,
+  getDocs,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import Link from "next/link";
 
@@ -11,7 +18,8 @@ async function GetPosts() {
   const req = await getDocs(
     query(
       collection(db, "posts"),
-      where("userEmail", "==", session?.user?.email)
+      where("userEmail", "==", session?.user?.email),
+      orderBy("createdAt", "desc")
     )
   );
   return req.docs;

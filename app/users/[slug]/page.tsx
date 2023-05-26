@@ -9,6 +9,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  orderBy,
   query,
   updateDoc,
   where,
@@ -28,15 +29,19 @@ interface Props {
 async function GetPosts(slug: any) {
   const user = await getDoc(doc(db, "users", slug));
   const req = await getDocs(
-    query(collection(db, "posts"), where("userEmail", "==", user.data()?.email))
+    query(
+      collection(db, "posts"),
+      where("userEmail", "==", user.data()?.email),
+      orderBy("createdAt", "desc")
+    )
   );
   return req.docs;
 }
 
 export default async function ProfilePage({ params }: Props) {
   const session = await getServerSession(authoptions);
-  const posts = await GetPosts(params.slug);
   const user = await getDoc(doc(db, "users", params.slug));
+  const posts = await GetPosts(params.slug);
 
   return (
     <div className={styles.container}>

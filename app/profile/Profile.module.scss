@@ -125,16 +125,17 @@
       box-shadow: 0 8px 16px 0 rgba(31, 30, 33, 0.37);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      width: 300px;
       border-radius: 10px;
       margin-bottom: 2rem;
       display: flex;
       flex-direction: column;
       border: 1px solid #1b1b1d;
+      max-width: 500px;
+      width: 100%;
     }
 
     .postImage {
-      width: 300px;
+      max-width: 500px;
 
       > div {
         position: unset !important;
