@@ -29,8 +29,7 @@ async function GetPosts() {
 export default async function ProfilePage() {
   const session = await getServerSession(authoptions);
 
-  if (!session)
-    redirect("/api/auth/signin?callbackUrl=http://localhost:3000/profile");
+  if (!session) redirect("/api/auth/signin");
 
   const posts = await GetPosts();
 
