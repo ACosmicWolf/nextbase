@@ -35,6 +35,10 @@ async function GetUsers() {
 
   const following = session?.user?.following;
 
+  if (!following) {
+    return [];
+  }
+
   const req = await getDocs(
     query(
       collection(db, "users"),
@@ -76,25 +80,29 @@ export default async function Home() {
           ))}
         </div>
 
-        <h2 className={styles.title}>Followed Users</h2>
+        {users.length > 0 && (
+          <>
+            <h2 className={styles.title}>Followed Users</h2>
 
-        <div className={styles.users}>
-          {users.map((user) => (
-            <Link href={`/users/${user.id}`} key={user.id}>
-              <div className={styles.user}>
-                <Image
-                  src={user.data().image}
-                  alt={user.data().name}
-                  width={100}
-                  height={100}
-                />
-                <div className={styles.user_info}>
-                  <h3>{user.data().name}</h3>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+            <div className={styles.users}>
+              {users.map((user) => (
+                <Link href={`/users/${user.id}`} key={user.id}>
+                  <div className={styles.user}>
+                    <Image
+                      src={user.data().image}
+                      alt={user.data().name}
+                      width={100}
+                      height={100}
+                    />
+                    <div className={styles.user_info}>
+                      <h3>{user.data().name}</h3>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </main>
   );
