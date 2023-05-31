@@ -1,7 +1,3 @@
-.title {
-  font-weight: 500;
-}
-
 .posts {
   margin-top: 20px;
   display: flex;
@@ -26,9 +22,19 @@
   }
 }
 
+.post_image {
+  img {
+    object-fit: cover;
+  }
+}
+
 .users {
   display: flex;
   flex-direction: column;
+
+  @media screen and (min-width: 768px) {
+    align-items: center;
+  }
 
   a {
     text-decoration: none;
@@ -39,7 +45,7 @@
     width: 100%;
 
     @media screen and (min-width: 768px) {
-      width: 50%;
+      width: 400px;
     }
 
     margin-bottom: 20px;
@@ -60,5 +66,14 @@
       border-radius: 50%;
       margin: 20px;
     }
+  }
+}
+
+.title {
+  margin-top: 40px;
+
+  @media screen and (min-width: 768px) {
+    text-align: center;
+    margin-top: 80px;
   }
 }

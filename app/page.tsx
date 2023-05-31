@@ -53,18 +53,20 @@ export default async function Home() {
   return (
     <main>
       <div>
-        <h2 className={styles.posts_title}>Posts</h2>
+        <h2>Posts</h2>
         <div className={styles.posts}>
           {posts.map((post) => (
             <Link href={`/posts/${post.id}`} key={post.id}>
               <div className={styles.post}>
                 {post.data().image && (
-                  <Image
-                    src={post.data().image}
-                    alt={post.data().title}
-                    width={200}
-                    height={100}
-                  />
+                  <div className={styles.post_image}>
+                    <Image
+                      src={post.data().image}
+                      alt={post.data().title}
+                      width={200}
+                      height={100}
+                    />
+                  </div>
                 )}
                 <div className={styles.post_info}>
                   <h3>{post.data().title}</h3>
