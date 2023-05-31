@@ -9,6 +9,9 @@ import {
 } from "firebase/firestore";
 import Image from "next/image";
 
+import styles from "./Post.module.scss";
+import Link from "next/link";
+
 interface Props {
   params: {
     slug: string;
@@ -26,22 +29,44 @@ export default async function Post({ params }: Props) {
 
   return (
     <div>
-      <h1>{data.data()?.title}</h1>
-      <p>
+      <Link href={`/users/${data.data()?.userId}`} className={styles.author}>
         <Image
           src={data.data()?.userImage}
           alt="Author Pfp"
           width={50}
           height={50}
         />
-        <small>Created by: {data.data()?.userName}</small>
-      </p>
-      <p>{data.data()?.content}</p>
-      <p>
-        <small>
-          Created at: {data.data()?.createdAt.toDate().toLocaleString()}
-        </small>
-      </p>
+        <small>{data.data()?.userName}</small>
+      </Link>
+
+      <div className={styles.container}>
+        <h1 className={styles.title}>{data.data()?.title}</h1>
+
+        <div className={styles.imageContainer}>
+          {data.data()?.image && (
+            <Image
+              src={data.data()?.image}
+              alt={data.data()?.title}
+              fill
+              className={styles.image}
+            />
+          )}
+        </div>
+
+        <p>{data.data()?.content}</p>
+        <p className={styles.createdAt}>
+          {`${data
+            .data()
+            ?.createdAt.toDate()
+            .toLocaleString("en-US", { timeStyle: "short" })}
+            -
+            ${data.data()?.createdAt.toDate().toLocaleString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}`}
+        </p>
+      </div>
     </div>
   );
 }
