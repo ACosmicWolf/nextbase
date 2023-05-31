@@ -35,19 +35,19 @@ async function GetUsers() {
 
   const following = session?.user?.following;
 
-  if (!following) {
+  if (!following || following.length === 0) {
     return [];
+  } else {
+    const req = await getDocs(
+      query(
+        collection(db, "users"),
+        limit(5),
+        where(documentId(), "in", following)
+      )
+    );
+
+    return req.docs;
   }
-
-  const req = await getDocs(
-    query(
-      collection(db, "users"),
-      limit(5),
-      where(documentId(), "in", following)
-    )
-  );
-
-  return req.docs;
 }
 
 export default async function Home() {
